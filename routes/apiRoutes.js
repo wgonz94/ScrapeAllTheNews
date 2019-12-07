@@ -1,17 +1,17 @@
 var express = require("express");
-var router = express.Router();
 const axios = require("axios");
 const cheerio = require("cheerio");
 const db = require("../models");
 
 
 
+module.exports = app => {
 
-router.get("/", function(req,res) {
+app.get("/", function(req,res) {
     res.render("index")
 })
 //GET Route for website
-router.get("/scrape", function(req,res){
+app.get("/scrape", function(req,res){
     axios.get("https://www.theverge.com/").then(function(response) {
 
         var $ = cheerio.load(response.data);
@@ -39,7 +39,7 @@ router.get("/scrape", function(req,res){
 
 //Routing for getting all Articles from db
 
-router.get("/articles", function(req, res) {
+app.get("/articles", function(req, res) {
     db.Article.find({})
       .then(function(dbArticle) {
           res.json(dbArticle);
@@ -51,7 +51,7 @@ router.get("/articles", function(req, res) {
 });
 
 //Routing for saving/updating Article's associated Note
-router.post("/articles/:id", function(req, res) {
+app.post("/articles/:id", function(req, res) {
 
     //create new note
     db.Note.create(req.body)
@@ -66,4 +66,4 @@ router.post("/articles/:id", function(req, res) {
     });
 });
 
-module.exports = routes;
+}
