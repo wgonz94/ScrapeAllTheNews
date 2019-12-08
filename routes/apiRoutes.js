@@ -17,7 +17,7 @@ app.get("/scrape", function(req,res){
         var $ = cheerio.load(response.data);
 
         //grab article title
-        $("article a").each(function(i, element) {
+        $("div.c-entry-box--compact__body").each(function(i, element) {
             //save empty result object
             var result = {};
             // Add the text and href of every link, and save them as properties 
